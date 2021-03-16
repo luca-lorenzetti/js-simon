@@ -5,7 +5,7 @@ $(function(){
     function enterNumbers(){
         var nums = [];
 
-        for (var i = 0; i < 30; i++) {
+        for (var i = 0; i < 5; i++) {
             nums.push(parseInt(prompt("Indovina il "+(i+1)+"\° numero: ") )); 
         }
 
@@ -33,23 +33,26 @@ $(function(){
 
         return nums;
     }
-
+   // FINE FUNZIONI 
 
     alert("Memorizza i numeri che seguiranno");
 
     // Definisco le variabili
     var nums = genNumbers();
     var spanTime = $('span.countdown > small');
+    var pt = 0;
+    var numeriIndovinati = [];
+    var time = 30; // Tempo countdown
 
     // Stampo i numeri generati
     stampaNumeri(nums,"");
 
-    var time = 5;
+
 
     var game = setInterval(function(){
 
         if( time < 0){
-            var numeriIndovinati = [];
+            
             var numeriUtente = enterNumbers();
     
             // Ciclo per controllare quali numeri si sono indovinati
@@ -59,8 +62,15 @@ $(function(){
                 }
             }
     
-            // STampo il risultato
+            // Calcolo e Stampo il risultato
+            if( numeriIndovinati.length != 0){
+                pt = (pt+1) + numeriIndovinati.length;
+            }
+            
+            $(spanTime).html(pt+"pt");
+
             alert("Hai indovinato: " + numeriIndovinati.length + " numeri\n");
+            
             stampaNumeri(numeriIndovinati,"Numeri indovinati:\n");
             
             // Interrompo il ciclo infinito
@@ -69,11 +79,9 @@ $(function(){
         else{
             $(spanTime).html(time);
             time--;
-
-            if(time < 0){
+            if( time < 0){
                 $(spanTime).html("GO!");
             }
         }
     },1000);
-
 });
